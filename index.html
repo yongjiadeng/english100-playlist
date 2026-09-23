@@ -411,17 +411,19 @@
         .select("id, name, song_title, artist, note, created_at")
         .order("created_at", { ascending: false });
 
-      if (error) {
-        console.error(error);
-        count.textContent = "Could not load songs";
-        playlist.replaceChildren();
-        const msg = document.createElement("div");
-        msg.className = "card empty";
-        msg.textContent = "Something went wrong loading the playlist.";
-        playlist.appendChild(msg);
-        return;
-      }
+     if (error) {
+  console.error(error);
+  count.textContent = "Could not load songs";
+  playlist.replaceChildren();
 
+  const msg = document.createElement("div");
+  msg.className = "card empty";
+  msg.textContent =
+    `${error.code || "No error code"}: ${error.message || "Unknown error"}`;
+
+  playlist.appendChild(msg);
+  return;
+}
       renderSongs(data || []);
     }
 
